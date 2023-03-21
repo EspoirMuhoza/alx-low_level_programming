@@ -1,12 +1,13 @@
-#include <stdio.h>
+#include "main.h"
 /**
- * main- A program that prints _putchar
- *
- * Return: Always 0(Success)
+ * print_alphabet - print all alphabet in lowercase
  */
-int main()
+
+void print_alphabet(void)
 {
-	puts("_putchar");
-	puts("\n");
-	return (0);
+	char letter;
+
+	for (letter = 'a'; letter <= 'z'; letter++)
+		_putchar(letter);
+	_putchar('\n');
 }
