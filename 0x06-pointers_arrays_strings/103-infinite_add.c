@@ -1,66 +1,78 @@
+#include "main.h"
+
 /**
- * infinite_add - Add up two numbers stored in given char arrays
- * @n1: The first number
- * @n2: The second number
- * @r: Pointer to the buffer to store result
- * @size_r: The size of the buffer
- *
- * Return: 0 if buffer too small to store result, else return pointer to buffer
- */
+* infinite_add - a function that adds two numbers
+* @n1: a char pointer given by main that represents a num
+* @n2: a char pointer given by main that represents a num
+* @r: a buffer given by main
+* @size_r: the buffer size given by main
+*
+* Description: a function that adds numbers that are passed
+*	as a strings and we add them up
+* Return: the result to char *r
+* A: count up how long both n1 and n2 is
+* C: A counter is 1 more than the index numbers so we need to decrement by 1
+* D: if the buffer size given is less than the size of i or j
+*	then we want to return 0 which signals main error
+* E: we sum and append the last digit. we will need to swap later
+*	we loop from the last indices and go until size_r
+* F: We add up the index of n1[i] and n2[j]
+* G: if i and j are negative we break out of the loop because we have
+*	iterated through all the character arrays and there is nothing left
+* H: Simple overflow handling. we want the last digit and if we had
+*	a number with a 1 in the tens digit we store that in tens
+*	we then incluide that 1 in the sum and move on
+* I: We had to swap because at step E we added and made our r[k]
+*	array from the end to the beginning instead of to the beginning
+*	to the end. this helped us deal with carry on ints but
+*	the downside is we need to swap later on which is tedious.
+*	another way of going forward to back and not having to deal with swaps
+*	would be a complex r[i-1] += 1 type of situation but that can be
+*	iffy with out of bounds array issues and some other stuff
+* J: So if we had k reach the size_r but we still had more i and j indicies
+*	to add then that is an error and we didnt finish so return 0
+* K: k was our buffer size counter. so it is only fitting we had to put the
+*	last char with the k counter as the null char. then we k--
+*	so we can start at the very last index right next tot the null char
+*/
+
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int l1, l2, tmpl, rl, i, sum, num1, num2, carry;
-	char tmp[10000];
+	int i = 0, j = 0, k = 0;
+	int sum = 0;
+	int tens = 0;
+	int begin = 0;
+	int swap = 0;
 
-	rl = i = l1 = l2 = sum = num1 = num2 = carry = 0;
-	while (n1[l1] != '\0')
-		l1++;
-	while (n2[l2] != '\0')
-		l2++;
-	if (l1 + 2 > size_r || l2 + 2 > size_r)
+	while (n1[i] != 0)/* A */
+		i++;
+	while (n2[j] != 0)
+		j++;
+	i--;/* C */
+	j--;
+	if (i > size_r || j > size_r)/* D */
 		return (0);
-	l1--;
-	l2--;
-	while (i <= l1 || i <= l2)
+	for ( ; k < size_r; i--, j--, k++)/* E */
 	{
-		num1 = num2 = 0;
-		if (i <= l1)
-			num1 = n1[l1 - i] - '0';
-		if (i <= l2 && (l2 - i) >= 0)
-			num2 = n2[l2 - i] - '0';
-		sum = num1 + num2 + carry;
-		if (sum >= 10)
-		{
-			carry = 1;
-			sum -= 10;
-		}
-		else
-			carry = 0;
-		r[i] = sum + '0';
-		i++;
-		rl++;
-	}
-	if (carry > 0)
-	{
-		r[i] = carry + '0';
-		r[i + 1] = '\0';
-	}
-	i = tmpl = 0;
-	while (i <= rl)
-	{
-		tmp[i] = r[rl - i];
-		tmpl++;
-		i++;
-	}
-	i = 0;
-	while (i < tmpl)
-	{
-		if (r[i] == '\0')
-		{
+		sum = tens;
+		if (i >= 0)/* F */
+			sum += n1[i] - '0';
+		if (j >= 0)
+			sum += n2[j] - '0';
+		if (i < 0 && j < 0 && sum == 0)/* G */
 			break;
-		}
-		r[i] = tmp[i];
-		i++;
+		tens = sum / 10;/* H */
+		r[k] = sum % 10 + '0';
+	}
+	if (i >= 0 || j >= 0 || sum > 0)/* J */
+		return (0);
+	r[k] = '\0';/* K */
+	k--;
+	for ( ; begin < k; k--, begin++)/* I */
+	{
+		swap = r[k];
+		r[k] = r[begin];
+		r[begin] = swap;
 	}
 	return (r);
 }
