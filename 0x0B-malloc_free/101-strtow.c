@@ -1,65 +1,73 @@
-#include "main.h"
-#include <stdio.h>
 #include <stdlib.h>
-
 /**
- * strtow - My function
- *@str: string
- *@av: arguments
- * Return: a pointer to a new string
+ * strtow - char
+ * @str: pointer to string params
+ * Return: char
  */
 char **strtow(char *str)
 {
-	int i, w, j, k, count, m, wordf;
-	char **p;
-	char *x;
-
-	w = 0;
-	j = 0;
-	i = 0;
-	count = 0;
-	if (*str == '\0' || str == NULL)
-		return (NULL);
-	for (i = 0; str[i] != '\0'; i++)
-	{
-		if (str[i] == ' ' && (str[i + 1] != ' ' || str[i + 1] == '\0'))
-			w++;
-	}
-	p = (char **)malloc((w + 1) * sizeof(char *));
-	if (p == NULL)
-		return (NULL);
-	for (wordf = 0; str[wordf] && j <= w; wordf++)
-	{
-		count = 0;
-		if (str[wordf] != ' ')
-		{
-			for (i = wordf ; str[i] != '\0'; i++)
-			{
-				if (str[i] == ' ')
-					break;
-				count++;
-			}
-			*(p + j) = (char *)malloc((count + 1) * sizeof(char));
-			if (*(p + j) == NULL)
-			{
-				for (k = 0; k <= j; k++)
-				{
-					x = p[k];
-					free(x);
-				}
-				free(p);
-				return (NULL);
-			}
-			for (m = 0; wordf < i; wordf++)
-			{
-				p[j][m] = str[wordf];
-				m++;
-			}
-			p[j][m] = '\0';
-			j++;
-		}
-	}
-	p[j] = NULL;
-	return (p);
+int i = 0, j = 0, k = 0;
+int len = 0, count = 0;
+char **f, *col;
+if (!str || !*str)
+{
+return (NULL);
 }
-
+while (*(str + i))
+{
+if (*(str + i) != ' ')
+{
+if (*(str + i + 1) == ' ' || *(str + i + 1) == 0)
+{
+count += 1;
+}
+}
+i++;
+}
+if (count == 0)
+{
+return (NULL);
+}
+count += 1;
+f = malloc(sizeof(char *) * count);
+if (!f)
+{
+return (NULL);
+}
+i = 0;
+while (*str)
+{
+while (*str == ' ' && *str)
+{
+str++;
+}
+len = 0;
+while (*(str + len) != ' ' && *(str + len))
+{
+len += 1;
+}
+len += 1;
+col = malloc(sizeof(char) * len);
+if (!col)
+{
+for (k = j - 1; k >= 0; k--)
+{
+free(f[k]);
+}
+free(f);
+return (NULL);
+}
+for (k = 0; k < (len - 1);  k++)
+{
+*(col + k) = *(str++);
+}
+*(col + k) = '\0';
+*(f + j) = col;
+if (j < (count - 1))
+{
+j++;
+}
+}
+*(f + j) = NULL;
+return (f);
+}
