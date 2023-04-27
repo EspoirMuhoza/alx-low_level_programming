@@ -6,14 +6,14 @@
 /**
  * struct list_s - My  linked list
  * @str: string
- * @length: length
+ * @len: len
  * @next: valiable that shows the next node
  *Objective: my structure
  */
 typedef struct list_s
 {
 	char *str;
-	unsigned int length;
+	unsigned int len;
 	struct list_s *next;
 } list_t;
 int _putchar(char c);
@@ -23,4 +23,4 @@ list_t *add_node(list_t **head, const char *str);
 list_t *add_node_end(list_t **head, const char *str);
 void free_list(list_t *head);
 
-#endif /* Designed by Espoir *
+#endif /* Designed by Espoir */
