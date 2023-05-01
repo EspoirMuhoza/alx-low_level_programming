@@ -28,11 +28,11 @@ listint_t *insert_nodeint_at_index(listint_t **head, unsigned int idx, int n)
 		return (*head);
 	}
 
-	while (cursor != '\0')
+	while (!cursor)
 	{
 		if (countable == idx - 1)
 		{
-			temp->next = cursor->next;
+			temporary->next = cursor->next;
 			(*cursor).next = temporary;
 		}
 		countable++;
