@@ -10,6 +10,6 @@
 	if (!(index <= 63))
 		return (-1);
 
-	*n = (index > 63) ? (*n & ~(1ul << index)) : *n;
+	*n = *n & (~(1ul << index));
 	return (1);
 }
