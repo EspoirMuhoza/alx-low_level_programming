@@ -23,7 +23,7 @@ ssize_t read_textfile(const char *filename, size_t letters)
 
 	file = open(filename, O_RDONLY);
 
-	if (~file)
+	if (file == -1)
 	{
 		free(text);
 		return (0);
