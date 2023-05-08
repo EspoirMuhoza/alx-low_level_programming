@@ -46,7 +46,7 @@ while (x == 1024)
 if (close(fl_from) == -1)
 	dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fl_from), exit(100);
 
-if (close(fl_to ) == -1)
+if (close(fl_to) == -1)
 	dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", fl_to), exit(100);
 
 return (0);
