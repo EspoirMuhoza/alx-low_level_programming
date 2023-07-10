@@ -14,18 +14,18 @@ void print_binary(unsigned long int n)
 	char x = '0';
 
 	while (!(print & n) && print != 0)
-		print = printt >> 1;
+		print = print >> 1;
 
 	if (!print)
-		write(1, &c, 1);
+		write(1, &x, 1);
 
 	while (print)
 	{
 		if (print & n)
-			c = '1';
+			x = '1';
 		else
-			c = '0';
-		write(1, &c, 1);
+			x = '0';
+		write(1, &x, 1);
 		print = print >> 1;
 	}
 }
