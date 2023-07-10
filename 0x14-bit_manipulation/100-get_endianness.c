@@ -4,9 +4,10 @@
  *
  * Return: something
  */
+
 int get_endianness(void)
 {
-	int x = 1;
+	int n = 1;
 
-	return (*((char *) &x) + '0');
+	return (*((char *) &n) + '0');
 }
